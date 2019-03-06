@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/mvn' 
+  args: ['clean','install']
+- name: 'gcr.io/cloud-builders/docker' 
+  args: ['build', '-t', 'gcr.io/sapient-si-dsst-184990/studentservice', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/sapient-si-dsst-184990/studentservice:latest']
