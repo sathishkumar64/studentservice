@@ -1,0 +1,25 @@
+server:
+  port: 8098
+  
+spring:
+  application:
+    name: studentservice  
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017  
+      database: studentservice 
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+    
+    
+logging:
+    level:
+      org.springframework.web: DEBUG
+      com.studentservice: INFO
+    pattern:
+      console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"    
+      file: "%d %-5level [%thread] %logger : %msg%n"
+    file: /logs/studentservice.log
+  
