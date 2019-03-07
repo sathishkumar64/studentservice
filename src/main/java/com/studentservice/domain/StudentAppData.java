@@ -11,6 +11,8 @@ public class StudentAppData {
 	
 	private String studentAppInfo;	
 
+	private String countryCode;	
+	
 	private String message;
 	
 	private List<Student> listStudent;
@@ -38,5 +40,14 @@ public class StudentAppData {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+	
 	
 }

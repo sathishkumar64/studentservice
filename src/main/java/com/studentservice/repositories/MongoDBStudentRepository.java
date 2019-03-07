@@ -5,6 +5,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Locale;
 
 import javax.jms.Queue;
 
@@ -58,7 +59,9 @@ public class MongoDBStudentRepository implements StudentRepository{
 	public StudentAppData findByschoolname(String schoolName) {
 		
 		List<Student> studentList=null;			
-		StudentAppData appData=new StudentAppData();		
+		StudentAppData appData=new StudentAppData();			
+		Locale currentLocale = Locale.getDefault();
+		appData.setCountryCode(currentLocale.getDisplayCountry());
 		sendJmsMessage(schoolName);		
 		Query query = query(where("schoolname").is(schoolName));		
 		studentList=operations.find(query, Student.class);
