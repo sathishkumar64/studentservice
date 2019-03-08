@@ -3,7 +3,6 @@ package com.studentservice.util;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -22,7 +22,6 @@ import com.google.api.services.compute.ComputeScopes;
 import com.google.api.services.compute.model.InstanceGroupAggregatedList;
 import com.google.api.services.compute.model.InstanceGroupsScopedList;
 import com.google.auth.Credentials;
-import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auth.oauth2.GoogleCredentials;	
 
 @Service
@@ -43,7 +42,6 @@ public class GoogleZoneFinder {
 				try {
 					computeService = createComputeService();
 				} catch (GeneralSecurityException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -72,26 +70,37 @@ public class GoogleZoneFinder {
 		   
 		  }
 	 
-	public static Compute createComputeService() throws IOException, GeneralSecurityException{
+	public  Compute createComputeService() throws IOException, GeneralSecurityException{
 		    HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 		     
-		    GoogleCredentials credentials = ComputeEngineCredentials.create();		    
-		    if (credentials.createScopedRequired()) {
-		    	credentials.createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
-		    }
+		      /*GoogleCredentials credentials = ComputeEngineCredentials.create();	
+		    
+		      if (credentials.createScopedRequired()) {
+			    	credentials.createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
+			   }
 		    		    
-		    GoogleCredential credential = GoogleCredential.getApplicationDefault();
+		       /*/
+		    
+		    httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+
+		      // Authenticate using Google Application Default Credentials.
+		      GoogleCredential credential = GoogleCredential.getApplicationDefault();
 		      if (credential.createScopedRequired()) {
 		        List<String> scopes = new ArrayList<>();
-		   
-		        scopes.add(ComputeScopes.COMPUTE);
+		         scopes.add(ComputeScopes.COMPUTE);
+		         scopes.add("https://www.googleapis.com/auth/cloud-platform");
 		        credential = credential.createScoped(scopes);
-		      }		    
-		    Compute compute = new Compute.Builder(httpTransport, JSON_FACTORY, credential)
-		            .setApplicationName(APPLICATION_NAME)
-		            .build();
+		      }
+
+		      // Create Compute Engine object for listing instances.
+		      Compute compute =
+		          new Compute.Builder(httpTransport, JSON_FACTORY, credential)
+		              .setApplicationName(APPLICATION_NAME)
+		              .build();
+
+		   
 		    
-		   return new Compute.Builder(httpTransport, JSON_FACTORY,credential).setApplicationName(APPLICATION_NAME).build();
+		   return compute;
 		 }
 	 
 	 
