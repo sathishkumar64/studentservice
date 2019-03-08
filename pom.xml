@@ -86,22 +86,12 @@
 			<artifactId>google-api-services-compute</artifactId>
 			<version>v1-rev208-1.25.0</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.google.auth/google-auth-library-credentials -->
+	
 		<dependency>
 			<groupId>com.google.auth</groupId>
-			<artifactId>google-auth-library-credentials</artifactId>
+			<artifactId>google-auth-library-appengine</artifactId>
 			<version>0.13.0</version>
 		</dependency>
-		
-		<dependency>
-			<groupId>com.google.auth</groupId>
-			<artifactId>google-auth-library-oauth2-http</artifactId>
-			<version>0.1.0</version>
-		</dependency>
-		<!-- Thanks for using https://jar-download.com -->
-
-
 
 	</dependencies>
 
