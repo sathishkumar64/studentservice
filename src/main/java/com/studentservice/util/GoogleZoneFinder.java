@@ -63,6 +63,13 @@ public class GoogleZoneFinder {
 			
 			 httpTransport = GoogleNetHttpTransport.newTrustedTransport();	
 			 GoogleCredentials credentials = ComputeEngineCredentials.create();
+			 
+			 logger.info(credentials.getAuthenticationType());
+			 logger.info(credentials.getAccessToken().getTokenValue());
+			 logger.info(credentials.getApplicationDefault().getAccessToken().getTokenValue());
+			 logger.info(credentials.create(credentials.getAccessToken()).getAccessToken().getTokenValue());
+			 
+			 
 			 credential.setAccessToken(credentials.getAccessToken().getTokenValue());			 
 			
 			 if (credential.createScopedRequired()) {
