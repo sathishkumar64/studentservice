@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import com.studentservice.domain.Student;
 import com.studentservice.domain.StudentAppData;
+import com.studentservice.util.GoogleZoneFinder;
 
 @Repository
 public class MongoDBStudentRepository implements StudentRepository{
@@ -38,6 +39,9 @@ public class MongoDBStudentRepository implements StudentRepository{
 	@Autowired
     private Queue queue;
 	
+	@Autowired
+	private GoogleZoneFinder googleZoneFinder;
+	
 	
 	@Autowired
 	public MongoDBStudentRepository(MongoOperations operations) {	
@@ -54,12 +58,15 @@ public class MongoDBStudentRepository implements StudentRepository{
 		return appData;
 	}
 
+	
+	
+	
 
 	@Override
 	public StudentAppData findByschoolname(String schoolName) {
-		
 		List<Student> studentList=null;			
-		StudentAppData appData=new StudentAppData();			
+		StudentAppData appData=new StudentAppData();
+		googleZoneFinder.printInstances();
 		Locale currentLocale = Locale.getDefault();
 		appData.setCountryCode(currentLocale.getDisplayCountry());
 		sendJmsMessage(schoolName);		
