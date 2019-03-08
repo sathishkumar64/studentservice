@@ -58,31 +58,24 @@ public class GoogleZoneFinder {
 	}
 
 	public Compute createComputeService() {
-		HttpTransport httpTransport = null;
-		GoogleCredentials credentials = null;
-		
+		HttpTransport httpTransport = null;		
+		GoogleCredential credential =null;
 		try {
 			
-			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-	
-			 credentials = ComputeEngineCredentials.create();
-			 
-			 GoogleCredential credential = GoogleCredential.getApplicationDefault();
-			 
-			 credential.setAccessToken(credentials.getApplicationDefault().getAccessToken().getTokenValue());
-			 
-			if (credentials.createScopedRequired()) {
-				credentials.createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
-			}
+			 httpTransport = GoogleNetHttpTransport.newTrustedTransport();	
+			 GoogleCredentials credentials = ComputeEngineCredentials.create();			 
+			 credential = GoogleCredential.getApplicationDefault();
+			 credential.setAccessToken(credentials.getAccessToken().getTokenValue());			 
 			
-			
-		
+			 if (credential.createScopedRequired()) {
+				credential.createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
+			 }
 		} catch (GeneralSecurityException | IOException e) {		
 			e.printStackTrace();
 		}
 		
 		
-		Compute compute = new Compute.Builder(httpTransport, JSON_FACTORY, (HttpRequestInitializer) credentials).setApplicationName(APPLICATION_NAME).build();
+		Compute compute = new Compute.Builder(httpTransport, JSON_FACTORY,credential).setApplicationName(APPLICATION_NAME).build();
 		return compute;
 	}
 
