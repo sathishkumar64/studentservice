@@ -1,6 +1,9 @@
 package com.studentservice.util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Map;
@@ -17,6 +20,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.compute.Compute;
 import com.google.api.services.compute.model.InstanceGroupAggregatedList;
 import com.google.api.services.compute.model.InstanceGroupsScopedList;
+import com.google.auth.oauth2.ComputeEngineCredentials;
+import com.google.auth.oauth2.GoogleCredentials;
 
 
 @Service
@@ -56,12 +61,28 @@ public class GoogleZoneFinder {
 
 	public Compute createComputeService() {
 		HttpTransport httpTransport = null;		
-		GoogleCredential credential = null;
+		GoogleCredential credential =new GoogleCredential();		
 		try {	
 			 httpTransport = GoogleNetHttpTransport.newTrustedTransport();	
+			 ClassLoader classLoader = getClass().getClassLoader();
+			 InputStream inputStream = classLoader.getResourceAsStream("sapient-si-dsst-184990-9c9f03224da8.json");
+			 GoogleCredentials credentials = ComputeEngineCredentials.fromStream(inputStream);
+			
+			 
+			 logger.info(credentials.getAuthenticationType());		
+			 if(credentials.getApplicationDefault().getAccessToken().getTokenValue()!=null){
+
+				 logger.info(credentials.getApplicationDefault().getAccessToken().getTokenValue());
+
+				 logger.info(credentials.create(credentials.getAccessToken()).getAccessToken().getTokenValue());
+			 }	
+			 
+			 
+			 logger.info(credentials.getAccessToken().getTokenValue());			 
+			 credential.setAccessToken(credentials.getAccessToken().getTokenValue());
 			 credential = GoogleCredential.getApplicationDefault();	 
 			 logger.info(credential.getAccessToken());		
-		
+
 			 if (credential.createScopedRequired()) {
 				credential.createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
 			 }
@@ -71,5 +92,5 @@ public class GoogleZoneFinder {
 		Compute compute = new Compute.Builder(httpTransport, JSON_FACTORY,credential).build();
 		return compute;
 	}
-
+	
 }
