@@ -61,35 +61,24 @@ public class GoogleZoneFinder {
 
 	public Compute createComputeService() {
 		HttpTransport httpTransport = null;		
-		GoogleCredential credential =new GoogleCredential();		
+		GoogleCredential credential =new GoogleCredential();	
+		 Compute compute=null;
 		try {	
 			 httpTransport = GoogleNetHttpTransport.newTrustedTransport();	
 			 ClassLoader classLoader = getClass().getClassLoader();
 			 InputStream inputStream = classLoader.getResourceAsStream("sapient-si-dsst-184990-9c9f03224da8.json");
 			 GoogleCredentials credentials = ComputeEngineCredentials.fromStream(inputStream);
-			
-			 
 			 logger.info(credentials.getAuthenticationType());		
-			 if(credentials.getApplicationDefault().getAccessToken().getTokenValue()!=null){
-
-				 logger.info(credentials.getApplicationDefault().getAccessToken().getTokenValue());
-
-				 logger.info(credentials.create(credentials.getAccessToken()).getAccessToken().getTokenValue());
-			 }	
-			 
-			 
-			 logger.info(credentials.getAccessToken().getTokenValue());			 
-			 credential.setAccessToken(credentials.getAccessToken().getTokenValue());
-			 credential = GoogleCredential.getApplicationDefault();	 
-			 logger.info(credential.getAccessToken());		
-
+			 logger.info(credentials.getAccessToken().getTokenValue());				
+			 credential.setAccessToken(credentials.getAccessToken().getTokenValue());			 
+			 logger.info(credential.getAccessToken());	
 			 if (credential.createScopedRequired()) {
 				credential.createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
 			 }
+			 compute = new Compute.Builder(httpTransport, JSON_FACTORY,credential).build();
 		} catch (GeneralSecurityException | IOException e) {		
 			e.printStackTrace();
-		}
-		Compute compute = new Compute.Builder(httpTransport, JSON_FACTORY,credential).build();
+		}		
 		return compute;
 	}
 	
