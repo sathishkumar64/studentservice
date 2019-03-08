@@ -88,12 +88,13 @@
 			<artifactId>google-api-services-compute</artifactId>
 			<version>beta-rev119-1.25.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-storage</artifactId>
 			<version>1.64.0</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>com.google.cloud</groupId>
@@ -101,9 +102,14 @@
 			<version>0.82.0-alpha</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.google.api/gax -->
+		<dependency>
+			<groupId>com.google.api</groupId>
+			<artifactId>gax</artifactId>
+			<version>1.42.0</version>
+		</dependency>
 
-		<!-- <dependency> <groupId>com.google.auth</groupId> <artifactId>google-auth-library-appengine</artifactId> 
-			<version>0.13.0</version> </dependency> -->
+
 
 	</dependencies>
 
