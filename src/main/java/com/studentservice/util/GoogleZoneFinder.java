@@ -17,7 +17,6 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.compute.Compute;
 import com.google.api.services.compute.model.InstanceGroupAggregatedList;
 import com.google.api.services.compute.model.InstanceGroupsScopedList;
-import com.google.auth.http.HttpTransportFactory;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auth.oauth2.GoogleCredentials;
 
@@ -57,41 +56,30 @@ public class GoogleZoneFinder {
 
 	}
 
-	public Compute createComputeService() throws IOException {
-		HttpTransport httpTransports = null;		
+	public Compute createComputeService() {
+		HttpTransport httpTransport = null;		
 		GoogleCredential credential =new GoogleCredential();
-					
-			 GoogleCredentials credentials = ComputeEngineCredentials.getApplicationDefault(new HttpTransportFactory() {
-				@Override
-				public HttpTransport create() {
-					 HttpTransport httpTransport = null;		
-					 try {
-						 httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-					} catch (GeneralSecurityException | IOException e) {					
-						e.printStackTrace();
-					}
-					return httpTransport;	
-				}
-			});
-			 
-			 logger.info("Type:::::::::::::"+credentials.getAuthenticationType());
-		
-			 if(credentials.getApplicationDefault().getAccessToken().getTokenValue()!=null){				
-				 logger.info(credentials.getApplicationDefault().getAccessToken().getTokenValue());				 
+		try {			
+			 httpTransport = GoogleNetHttpTransport.newTrustedTransport();	
+			 GoogleCredentials credentials = ComputeEngineCredentials.create();			 
+			 logger.info(credentials.getAuthenticationType());		
+			 if(credentials.getApplicationDefault().getAccessToken().getTokenValue()!=null){
+				
+				 logger.info(credentials.getApplicationDefault().getAccessToken().getTokenValue());
+				 
 				 logger.info(credentials.create(credentials.getAccessToken()).getAccessToken().getTokenValue());
-			 }
-			 
-			 logger.info("token:::::::::::::"+credentials.getAccessToken().getTokenValue());
-			 
-			 credential.setAccessToken(credentials.getAccessToken().getTokenValue());			 
-			
+			 }			 
+			 logger.info(credentials.getAccessToken().getTokenValue());			 
+			 credential.setAccessToken(credentials.getAccessToken().getTokenValue());
 			 if (credential.createScopedRequired()) {
 				credential.createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
 			 }
+		} catch (GeneralSecurityException | IOException e) {		
+			e.printStackTrace();
+		}
 		
 		
-		
-		Compute compute = new Compute.Builder(httpTransports, JSON_FACTORY,credential).build();
+		Compute compute = new Compute.Builder(httpTransport, JSON_FACTORY,credential).setApplicationName(APPLICATION_NAME).build();
 		return compute;
 	}
 
