@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
@@ -20,10 +20,6 @@ import com.google.api.services.compute.model.InstanceGroupAggregatedList;
 import com.google.api.services.compute.model.InstanceGroupsScopedList;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.Bucket;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
-import com.google.api.gax.paging.Page;
 
 
 @Service
@@ -70,21 +66,18 @@ public class GoogleZoneFinder {
 			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 	
 			 credentials = ComputeEngineCredentials.create();
+			 
+			 GoogleCredential credential = GoogleCredential.getApplicationDefault();
+			 
+			 credential.setAccessToken(credentials.getApplicationDefault().getAccessToken().getTokenValue());
+			 
 			if (credentials.createScopedRequired()) {
 				credentials.createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
 			}
 			
-			Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-
-		    System.out.println("Buckets:");
-		    Page<Bucket> buckets = storage.list();
-		    for (Bucket bucket : buckets.iterateAll()) {
-		      System.out.println(bucket.toString());
-		    }
+			
 		
-		
-		} catch (GeneralSecurityException | IOException e) {
-			// TODO Auto-generated catch block
+		} catch (GeneralSecurityException | IOException e) {		
 			e.printStackTrace();
 		}
 		
