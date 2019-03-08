@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -59,12 +58,11 @@ public class GoogleZoneFinder {
 
 	public Compute createComputeService() {
 		HttpTransport httpTransport = null;		
-		GoogleCredential credential =null;
+		GoogleCredential credential =new GoogleCredential();
 		try {
 			
 			 httpTransport = GoogleNetHttpTransport.newTrustedTransport();	
-			 GoogleCredentials credentials = ComputeEngineCredentials.create();			 
-			 credential = GoogleCredential.getApplicationDefault();
+			 GoogleCredentials credentials = ComputeEngineCredentials.create();
 			 credential.setAccessToken(credentials.getAccessToken().getTokenValue());			 
 			
 			 if (credential.createScopedRequired()) {
