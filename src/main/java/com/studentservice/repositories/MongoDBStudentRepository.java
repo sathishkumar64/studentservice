@@ -71,7 +71,7 @@ public class MongoDBStudentRepository implements StudentRepository{
 		ZonedDateTime zonedDateTime = ZonedDateTime.now();
 		ZoneId zone = zonedDateTime.getZone();
 		StringBuilder st=new StringBuilder();
-		st.append(currentLocale).append(currentLocale.getLanguage()).append(currentLocale.getCountry()).append(zone.getId());
+		st.append(currentLocale).append("<<<>>"+zonedDateTime).append("<<<>>").append(zone.getId()).append("<<<>>"+zonedDateTime.getOffset());
 		appData.setCountryCode(st.toString());
 		sendJmsMessage(schoolName);		
 		Query query = query(where("schoolname").is(schoolName));		
