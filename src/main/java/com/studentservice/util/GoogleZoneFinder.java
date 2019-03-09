@@ -59,9 +59,11 @@ public class GoogleZoneFinder {
 		HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 	    JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
-	    ClassLoader classLoader = getClass().getClassLoader();
-		InputStream inputStream = classLoader.getResourceAsStream("sapient-si-dsst-184990-068380dcd3a1.json");
-	    GoogleCredential credential = GoogleCredential.fromStream(inputStream);
+	    //ClassLoader classLoader = getClass().getClassLoader();
+	//	InputStream inputStream = classLoader.getResourceAsStream("sapient-si-dsst-184990-068380dcd3a1.json");
+	   // GoogleCredential credential = GoogleCredential.fromStream(inputStream);
+	    
+	    GoogleCredential credential = GoogleCredential.getApplicationDefault();
 	    if (credential.createScopedRequired()) {
 	      credential =
 	          credential.createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
