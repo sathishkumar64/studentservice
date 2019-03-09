@@ -1,7 +1,6 @@
 package com.studentservice.util;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Map;
@@ -15,10 +14,15 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.gax.paging.Page;
 import com.google.api.services.compute.Compute;
 import com.google.api.services.compute.model.InstanceGroupAggregatedList;
 import com.google.api.services.compute.model.InstanceGroupsScopedList;
-
+import com.google.auth.oauth2.ComputeEngineCredentials;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 
 @Service
 public class GoogleZoneFinder {
@@ -64,10 +68,29 @@ public class GoogleZoneFinder {
 	   // GoogleCredential credential = GoogleCredential.fromStream(inputStream);
 	    
 	    GoogleCredential credential = GoogleCredential.getApplicationDefault();
+	    
 	    if (credential.createScopedRequired()) {
 	      credential =
 	          credential.createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
 	    }
+	    
+	    logger.info(credential.getServiceAccountId());	
+	    logger.info(credential.getServiceAccountPrivateKeyId());
+	    logger.info(credential.getServiceAccountPrivateKey().getFormat());
+	    
+	    
+	    GoogleCredentials credentials = ComputeEngineCredentials.create();
+	    Storage storage = StorageOptions.newBuilder().setCredentials(credentials).setProjectId(PROJECT_ID).build().getService();
+
+	    logger.info("Buckets:");
+	    Page<Bucket> buckets = storage.list();
+	    for (Bucket bucket : buckets.iterateAll()) {
+	    	logger.info(bucket.toString());
+	    }
+	    
+	    
+	    
+	    
 	    logger.info(credential.getAccessToken());	
 	    return new Compute.Builder(httpTransport, jsonFactory, credential)
 	        .setApplicationName("Google-ComputeSample/0.1")
