@@ -4,6 +4,8 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,7 +22,6 @@ import org.springframework.stereotype.Repository;
 
 import com.studentservice.domain.Student;
 import com.studentservice.domain.StudentAppData;
-import com.studentservice.util.GoogleZoneFinder;
 
 @Repository
 public class MongoDBStudentRepository implements StudentRepository{
@@ -39,8 +40,6 @@ public class MongoDBStudentRepository implements StudentRepository{
 	@Autowired
     private Queue queue;
 	
-	@Autowired
-	private GoogleZoneFinder googleZoneFinder;
 	
 	
 	@Autowired
@@ -66,9 +65,14 @@ public class MongoDBStudentRepository implements StudentRepository{
 	public StudentAppData findByschoolname(String schoolName) {
 		List<Student> studentList=null;			
 		StudentAppData appData=new StudentAppData();
-		googleZoneFinder.printInstances();
+		
+		
 		Locale currentLocale = Locale.getDefault();
-		appData.setCountryCode(currentLocale.getDisplayCountry());
+		ZonedDateTime zonedDateTime = ZonedDateTime.now();
+		ZoneId zone = zonedDateTime.getZone();
+		StringBuilder st=new StringBuilder();
+		st.append(currentLocale).append(currentLocale.getLanguage()).append(currentLocale.getCountry()).append(zone.getId());
+		appData.setCountryCode(st.toString());
 		sendJmsMessage(schoolName);		
 		Query query = query(where("schoolname").is(schoolName));		
 		studentList=operations.find(query, Student.class);
