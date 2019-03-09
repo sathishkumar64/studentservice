@@ -39,6 +39,11 @@ public class GoogleZoneFinder {
 			computeService = createComputeService();
 
 			Compute.InstanceGroups.AggregatedList request = computeService.instanceGroups().aggregatedList(PROJECT_ID);
+			logger.info(request.getKey());
+			logger.info(request.getFields());
+			logger.info(request.getUriTemplate());
+			logger.info(request.getJsonContent().toString());
+			
 			InstanceGroupAggregatedList response;
 			do {
 				response = request.execute();
