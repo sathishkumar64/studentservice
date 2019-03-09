@@ -76,10 +76,10 @@ public class GoogleZoneFinder {
 	    
 	    logger.info(credential.getServiceAccountId());	
 	    logger.info(credential.getServiceAccountPrivateKeyId());
-	    logger.info(credential.getServiceAccountPrivateKey().getFormat());
+	    logger.info(credential.getServiceAccountPrivateKey().toString());
 	    
 	    
-	    GoogleCredentials credentials = ComputeEngineCredentials.create();
+	    /*GoogleCredentials credentials = ComputeEngineCredentials.create();
 	    Storage storage = StorageOptions.newBuilder().setCredentials(credentials).setProjectId(PROJECT_ID).build().getService();
 
 	    logger.info("Buckets:");
@@ -87,7 +87,7 @@ public class GoogleZoneFinder {
 	    for (Bucket bucket : buckets.iterateAll()) {
 	    	logger.info(bucket.toString());
 	    }
-	    
+	    */
 	    
 	    
 	    
