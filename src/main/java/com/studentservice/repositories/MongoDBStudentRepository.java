@@ -7,10 +7,10 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
-import javax.jms.Queue;
+import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.studentservice.domain.Student;
@@ -85,15 +84,24 @@ public class MongoDBStudentRepository implements StudentRepository{
 		String formattedString2 = zonedDateTime.format(formatter2);
 		
 		
+		   Calendar now = Calendar.getInstance();
+		     
+		     //get current TimeZone using getTimeZone method of Calendar class
+		     TimeZone timeZone = now.getTimeZone();
+		     
+		     //display current TimeZone using getDisplayName() method of TimeZone class
+		     System.out.println("Current TimeZone is : " + timeZone.getDisplayName());
+		
+		
+		
 		StringBuilder st=new StringBuilder();
-		st.append(currentLocale)
-		.append("<<<>>"+zonedDateTime)
+		 st.append(currentLocale)		
 		.append("<<<>>"+zone.getId())		
 		.append("<<<>>"+zonedDateTime.getOffset())
-		.append("<<<>>"+formattedString2);
-		
-		
-		
+		.append("<<<>>"+formattedString2)
+		.append("<<<>>"+zone.getRules())
+		.append("<<<>>"+Instant.now())
+		.append("<<<>>"+timeZone.getDisplayName());
 		
 		appData.setCountryCode(st.toString());
 		sendJmsMessage(schoolName);		
