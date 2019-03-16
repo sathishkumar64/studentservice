@@ -6,6 +6,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
@@ -74,11 +75,26 @@ public class MongoDBStudentRepository implements StudentRepository{
 		
 		
 		
+		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm:ss z");
+		
+		
+		
 		Locale currentLocale = Locale.getDefault();
 		ZonedDateTime zonedDateTime = ZonedDateTime.now();
 		ZoneId zone = zonedDateTime.getZone();
+		String formattedString2 = zonedDateTime.format(formatter2);
+		
+		
 		StringBuilder st=new StringBuilder();
-		st.append(currentLocale).append("<<<>>"+zonedDateTime).append("<<<>>").append(zone.getId()).append("<<<>>"+zonedDateTime.getOffset());
+		st.append(currentLocale)
+		.append("<<<>>"+zonedDateTime)
+		.append("<<<>>"+zone.getId())		
+		.append("<<<>>"+zonedDateTime.getOffset())
+		.append("<<<>>"+formattedString2);
+		
+		
+		
+		
 		appData.setCountryCode(st.toString());
 		sendJmsMessage(schoolName);		
 		Query query = query(where("schoolname").is(schoolName));		

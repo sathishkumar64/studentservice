@@ -1,7 +1,6 @@
 package com.studentservice.util;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Map;
@@ -29,23 +28,23 @@ public class GoogleZoneFinder {
 	public void printInstances() {
 		logger.info("GoogleZoneFinder.....................................");
 		Compute computeService = null;
+	
+		
 		try {
-
 			computeService = createComputeService();
-
 			Compute.InstanceGroups.AggregatedList request = computeService.instanceGroups().aggregatedList(PROJECT_ID);
 			logger.info(request.getUriTemplate());
 			InstanceGroupAggregatedList response;
 			do {
-				response = request.execute();
-				
-				logger.info(response.toPrettyString());
-				
+				response = request.execute();	
 				if (response.getItems() == null) {
 					continue;
 				}
+		
 				for (Map.Entry<String, InstanceGroupsScopedList> item : response.getItems().entrySet()) {
-					logger.info(item.getKey() + ": " + item.getValue());
+				    if(item.getValue().keySet().contains("instanceGroups")){
+		        		System.out.println(item.getKey() + "=" + item.getValue()+"\n");
+		        	}
 				}
 				request.setPageToken(response.getNextPageToken());
 			} while (response.getNextPageToken() != null);
@@ -60,12 +59,7 @@ public class GoogleZoneFinder {
 		
 		
 		HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-	    JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-
-	  /*  ClassLoader classLoader = getClass().getClassLoader();
-		InputStream inputStream = classLoader.getResourceAsStream("sapient-si-dsst-184990-8f4fa5c22ef5.json");
-	    GoogleCredential credential = GoogleCredential.fromStream(inputStream);*/
-	    
+	    JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();	    
 	    GoogleCredential credential = GoogleCredential.getApplicationDefault();
 	    
 	    if (credential.createScopedRequired()) {
