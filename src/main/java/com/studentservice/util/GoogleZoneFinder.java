@@ -1,6 +1,7 @@
-/*package com.studentservice.util;
+package com.studentservice.util;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Map;
@@ -61,11 +62,11 @@ public class GoogleZoneFinder {
 		HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 	    JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
-	    //ClassLoader classLoader = getClass().getClassLoader();
-	//	InputStream inputStream = classLoader.getResourceAsStream("sapient-si-dsst-184990-068380dcd3a1.json");
-	   // GoogleCredential credential = GoogleCredential.fromStream(inputStream);
+	    ClassLoader classLoader = getClass().getClassLoader();
+		InputStream inputStream = classLoader.getResourceAsStream("sapient-si-dsst-184990-068380dcd3a1.json");
+	    GoogleCredential credential = GoogleCredential.fromStream(inputStream);
 	    
-	    GoogleCredential credential = GoogleCredential.getApplicationDefault();
+	    //GoogleCredential credential = GoogleCredential.getApplicationDefault();
 	    
 	    if (credential.createScopedRequired()) {
 	      credential =
@@ -78,6 +79,10 @@ public class GoogleZoneFinder {
 	    return new Compute.Builder(httpTransport, jsonFactory, credential)
 	        .setApplicationName("Google-ComputeSample/0.1")
 	        .build();
-	  }	
+
+	}
+	
+	public static void main(String[] args) {
+		new GoogleZoneFinder().printInstances();
+	}
 }
-*/
