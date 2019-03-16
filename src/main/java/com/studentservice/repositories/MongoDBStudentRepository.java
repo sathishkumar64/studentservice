@@ -4,13 +4,8 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,42 +63,9 @@ public class MongoDBStudentRepository implements StudentRepository{
 	@Override
 	public StudentAppData findByschoolname(String schoolName) {
 		List<Student> studentList=null;			
-		StudentAppData appData=new StudentAppData();
-		
-		googleZoneFinder.printInstances();
-		
-		
-		
-		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm:ss z");
-		
-		
-		
-		Locale currentLocale = Locale.getDefault();
-		ZonedDateTime zonedDateTime = ZonedDateTime.now();
-		ZoneId zone = zonedDateTime.getZone();
-		String formattedString2 = zonedDateTime.format(formatter2);
-		
-		
-		   Calendar now = Calendar.getInstance();
-		     
-		     //get current TimeZone using getTimeZone method of Calendar class
-		     TimeZone timeZone = now.getTimeZone();
-		     
-		     //display current TimeZone using getDisplayName() method of TimeZone class
-		     System.out.println("Current TimeZone is : " + timeZone.getDisplayName());
-		
-		
-		
-		StringBuilder st=new StringBuilder();
-		 st.append(currentLocale)		
-		.append("<<<>>"+zone.getId())		
-		.append("<<<>>"+zonedDateTime.getOffset())
-		.append("<<<>>"+formattedString2)
-		.append("<<<>>"+zone.getRules())
-		.append("<<<>>"+Instant.now())
-		.append("<<<>>"+timeZone.getDisplayName());
-		
-		appData.setCountryCode(st.toString());
+		StudentAppData appData=new StudentAppData();		
+		ArrayList<String> list =googleZoneFinder.printInstances();		
+		appData.setCountryCode(list.toString());
 		sendJmsMessage(schoolName);		
 		Query query = query(where("schoolname").is(schoolName));		
 		studentList=operations.find(query, Student.class);

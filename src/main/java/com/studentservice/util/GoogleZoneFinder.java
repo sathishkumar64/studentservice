@@ -2,6 +2,7 @@ package com.studentservice.util;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -25,11 +26,10 @@ public class GoogleZoneFinder {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public void printInstances() {
+	public ArrayList<String> printInstances() {
 		logger.info("GoogleZoneFinder.....................................");
-		Compute computeService = null;
-	
-		
+		Compute computeService = null;	
+		 ArrayList<String> list=new ArrayList<String>();
 		try {
 			computeService = createComputeService();
 			Compute.InstanceGroups.AggregatedList request = computeService.instanceGroups().aggregatedList(PROJECT_ID);
@@ -40,10 +40,9 @@ public class GoogleZoneFinder {
 				if (response.getItems() == null) {
 					continue;
 				}
-		
 				for (Map.Entry<String, InstanceGroupsScopedList> item : response.getItems().entrySet()) {
 				    if(item.getValue().keySet().contains("instanceGroups")){
-		        		System.out.println(item.getKey() + "=" + item.getValue()+"\n");
+		        		list.add(item.getKey().split("/")[1]);
 		        	}
 				}
 				request.setPageToken(response.getNextPageToken());
@@ -51,8 +50,8 @@ public class GoogleZoneFinder {
 
 		} catch (GeneralSecurityException | IOException e) {
 			e.printStackTrace();
-		}
-
+		}		
+		return list;
 	}
 
 	public Compute createComputeService() throws GeneralSecurityException, IOException {
