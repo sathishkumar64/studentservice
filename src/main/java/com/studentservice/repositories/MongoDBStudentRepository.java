@@ -7,12 +7,15 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jms.Queue;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.studentservice.domain.Student;
@@ -29,12 +32,12 @@ public class MongoDBStudentRepository implements StudentRepository{
 	@Autowired
 	BuildProperties buildProperties;
 
-	//@Autowired
-   // private JmsTemplate jmsTemplate;
+	@Autowired
+    private JmsTemplate jmsTemplate;
 	
 	
-	//@Autowired
-  //  private Queue queue;
+	@Autowired
+    private Queue queue;
 	
 	@Autowired
 	private GoogleZoneFinder googleZoneFinder;
@@ -92,7 +95,7 @@ public class MongoDBStudentRepository implements StudentRepository{
 		 sendingMessage.append(schoolname);
 		 sendingMessage.append(" and time is ");
 		 sendingMessage.append(instant);
-	//	 jmsTemplate.convertAndSend(queue,sendingMessage.toString());		
+		 jmsTemplate.convertAndSend(queue,sendingMessage.toString());		
 		 logger.info("JMS Posting Message............... {} ",sendingMessage.toString());	
 	}
 	
