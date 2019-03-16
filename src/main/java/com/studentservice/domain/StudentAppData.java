@@ -5,18 +5,17 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@JsonInclude(Include.NON_EMPTY)	
+@JsonInclude(Include.NON_EMPTY)
 public class StudentAppData {
 
-	
-	private String studentAppInfo;	
+	private String studentAppInfo;
 
-	private String countryCode;	
-	
+	private String appsDeployedZone;
+
 	private String message;
-	
+
 	private List<Student> listStudent;
-	
+
 	public List<Student> getListStudent() {
 		return listStudent;
 	}
@@ -24,7 +23,7 @@ public class StudentAppData {
 	public void setListStudent(List<Student> listStudent) {
 		this.listStudent = listStudent;
 	}
-	
+
 	public String getStudentAppInfo() {
 		return studentAppInfo;
 	}
@@ -41,13 +40,12 @@ public class StudentAppData {
 		this.message = message;
 	}
 
-	public String getCountryCode() {
-		return countryCode;
+	public String getAppsDeployedZone() {
+		return appsDeployedZone;
 	}
 
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
+	public void setAppsDeployedZone(String appsDeployedZone) {
+		this.appsDeployedZone = appsDeployedZone;
 	}
-	
-	
+
 }

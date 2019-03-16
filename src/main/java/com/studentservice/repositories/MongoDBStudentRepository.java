@@ -68,7 +68,7 @@ public class MongoDBStudentRepository implements StudentRepository{
 		List<Student> studentList=null;			
 		StudentAppData appData=new StudentAppData();		
 		ArrayList<String> list =googleZoneFinder.printInstances();		
-		appData.setCountryCode(list.toString());
+		appData.setAppsDeployedZone(list.toString());
 		sendJmsMessage(schoolName);		
 		Query query = query(where("schoolname").is(schoolName));		
 		studentList=operations.find(query, Student.class);
