@@ -10,7 +10,7 @@ steps:
   - set
   - image
   - deployment
-  - studentservice-v1
+  - student-deployment-v1
   - studentservice=gcr.io/$PROJECT_ID/studentservice:$BRANCH_NAME-$REVISION_ID
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-north1-a'
