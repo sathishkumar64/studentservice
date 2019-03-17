@@ -4,7 +4,6 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.jms.Queue;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Repository;
 
 import com.studentservice.domain.Student;
 import com.studentservice.domain.StudentAppData;
-import com.studentservice.util.GoogleZoneFinder;
 
 @Repository
 public class MongoDBStudentRepository implements StudentRepository{
@@ -39,10 +37,6 @@ public class MongoDBStudentRepository implements StudentRepository{
 	@Autowired
     private Queue queue;
 	
-	@Autowired
-	private GoogleZoneFinder googleZoneFinder;
-	
-	
 	
 	@Autowired
 	public MongoDBStudentRepository(MongoOperations operations) {	
@@ -60,15 +54,11 @@ public class MongoDBStudentRepository implements StudentRepository{
 	}
 
 	
-	
-	
 
 	@Override
 	public StudentAppData findByschoolname(String schoolName) {
 		List<Student> studentList=null;			
-		StudentAppData appData=new StudentAppData();		
-		ArrayList<String> list =googleZoneFinder.printInstances();		
-		appData.setAppsDeployedZone(list.toString());
+		StudentAppData appData=new StudentAppData();			
 		sendJmsMessage(schoolName);		
 		Query query = query(where("schoolname").is(schoolName));		
 		studentList=operations.find(query, Student.class);

@@ -10,8 +10,6 @@ public class StudentAppData {
 
 	private String studentAppInfo;
 
-	private String appsDeployedZone;
-
 	private String message;
 
 	private List<Student> listStudent;
@@ -39,13 +37,4 @@ public class StudentAppData {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
-	public String getAppsDeployedZone() {
-		return appsDeployedZone;
-	}
-
-	public void setAppsDeployedZone(String appsDeployedZone) {
-		this.appsDeployedZone = appsDeployedZone;
-	}
-
 }
