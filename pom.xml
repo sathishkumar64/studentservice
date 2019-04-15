@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -80,6 +81,42 @@
 			<artifactId>jaeger-thrift</artifactId>
 			<version>0.32.0</version>
 		</dependency>
+
+
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-compute</artifactId>
+			<version>beta-rev119-1.25.0</version>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-storage</artifactId>
+			<version>1.64.0</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-compute</artifactId>
+			<version>0.82.0-alpha</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.api</groupId>
+			<artifactId>gax</artifactId>
+			<version>1.42.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>24.1.1-jre</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

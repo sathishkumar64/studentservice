@@ -59,7 +59,7 @@ public class MongoDBStudentRepository implements StudentRepository{
 	public StudentAppData findByschoolname(String schoolName) {
 		List<Student> studentList=null;			
 		StudentAppData appData=new StudentAppData();			
-		sendJmsMessage(schoolName);		
+	//	sendJmsMessage(schoolName);		
 		Query query = query(where("schoolname").is(schoolName));		
 		studentList=operations.find(query, Student.class);
 		String buildInfo=setBuildInfo();		
@@ -71,6 +71,13 @@ public class MongoDBStudentRepository implements StudentRepository{
 		}
 		return appData;
 	}
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public List<Student> findAll() {	
