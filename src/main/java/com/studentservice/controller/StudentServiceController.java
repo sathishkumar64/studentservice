@@ -30,7 +30,7 @@ public class StudentServiceController {
 	public MongoDBStudentRepository mongoDBStudentRepository;
 
 	@GetMapping(path = "/student/getStudentDetailsForSchool/{schoolname}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public StudentAppData getStudents(@PathVariable String schoolname, @RequestHeader HttpHeaders headers) {
+	public StudentAppData getStudents(@PathVariable String schoolname, @RequestHeader HttpHeaders headers) throws Exception {
 		logger.info("Reading Header Info ::::::::: {}", headers);
 		StudentAppData appData = null;	
 		if (headers.getFirst("end-user") == null || headers.getFirst("end-user").isEmpty()) {				

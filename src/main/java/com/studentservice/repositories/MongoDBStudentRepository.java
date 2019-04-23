@@ -6,15 +6,12 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 import java.time.Instant;
 import java.util.List;
 
-import javax.jms.Queue;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.studentservice.domain.Student;
@@ -30,12 +27,12 @@ public class MongoDBStudentRepository implements StudentRepository{
 	@Autowired
 	BuildProperties buildProperties;
 
-	@Autowired
-    private JmsTemplate jmsTemplate;
+	//@Autowired
+   // private JmsTemplate jmsTemplate;
 	
 	
-	@Autowired
-    private Queue queue;
+	//@Autowired
+   // private Queue queue;
 	
 	
 	@Autowired
@@ -59,7 +56,7 @@ public class MongoDBStudentRepository implements StudentRepository{
 	public StudentAppData findByschoolname(String schoolName) {
 		List<Student> studentList=null;			
 		StudentAppData appData=new StudentAppData();			
-		sendJmsMessage(schoolName);		
+		//sendJmsMessage(schoolName);		
 		Query query = query(where("schoolname").is(schoolName));		
 		studentList=operations.find(query, Student.class);
 		String buildInfo=setBuildInfo();		
@@ -74,7 +71,9 @@ public class MongoDBStudentRepository implements StudentRepository{
 
 	@Override
 	public List<Student> findAll() {	
-		return operations.findAll(Student.class);
+		List<Student> studentList=null;
+		studentList = operations.findAll(Student.class);
+		return studentList;
 	}
 
 	
@@ -85,7 +84,7 @@ public class MongoDBStudentRepository implements StudentRepository{
 		 sendingMessage.append(schoolname);
 		 sendingMessage.append(" and time is ");
 		 sendingMessage.append(instant);
-		 jmsTemplate.convertAndSend(queue,sendingMessage.toString());		
+		// jmsTemplate.convertAndSend(queue,sendingMessage.toString());		
 		 logger.info("JMS Posting Message............... {} ",sendingMessage.toString());	
 	}
 	
