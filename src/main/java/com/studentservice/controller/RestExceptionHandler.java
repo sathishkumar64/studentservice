@@ -17,7 +17,7 @@ public class RestExceptionHandler {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@ExceptionHandler(value = { IllegalArgumentException.class })
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)		
 	public ErrorResponse badRequest(Exception ex, HttpServletRequest request) {
 		logger.error("Request raised: {}, Status: {}, Error Message: {}", request.getRequestURL(),HttpStatus.BAD_REQUEST.value(), ex.getLocalizedMessage());
 		return new ErrorResponse(400, "Bad Request", ex.getLocalizedMessage());
