@@ -6,12 +6,15 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 import java.time.Instant;
 import java.util.List;
 
+import javax.jms.Queue;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.studentservice.domain.Student;
@@ -27,12 +30,12 @@ public class MongoDBStudentRepository implements StudentRepository{
 	@Autowired
 	BuildProperties buildProperties;
 
-	//@Autowired
-   // private JmsTemplate jmsTemplate;
+	@Autowired
+    private JmsTemplate jmsTemplate;
 	
 	
-	//@Autowired
-   // private Queue queue;
+	@Autowired
+    private Queue queue;
 	
 	
 	@Autowired
@@ -55,17 +58,17 @@ public class MongoDBStudentRepository implements StudentRepository{
 	@Override
 	public StudentAppData findByschoolname(String schoolName) {
 		List<Student> studentList=null;			
-		StudentAppData appData=new StudentAppData();			
-		//sendJmsMessage(schoolName);		
+		StudentAppData appData=new StudentAppData();
 		Query query = query(where("schoolname").is(schoolName));		
 		studentList=operations.find(query, Student.class);
 		String buildInfo=setBuildInfo();		
 		appData.setStudentAppInfo(buildInfo);
 		if (studentList.isEmpty()) {				
 			appData.setMessage("Student List Not Found");	
-		}else{				 
+		}else{
 			appData.setListStudent(studentList);
-		}
+		}		
+		sendJmsMessage(schoolName,studentList.size());			
 		return appData;
 	}
 
@@ -77,14 +80,16 @@ public class MongoDBStudentRepository implements StudentRepository{
 	}
 
 	
-	private void sendJmsMessage(String schoolname){		
+	private void sendJmsMessage(String schoolname,int count){		
 		 Instant instant = Instant.now(); 		
 		 StringBuilder sendingMessage=new StringBuilder();
-		 sendingMessage.append("Posting JMS Student details for ");
+		 sendingMessage.append("Total Student count is ");
+		 sendingMessage.append(count);
+		 sendingMessage.append(" for requested school \"");
 		 sendingMessage.append(schoolname);
-		 sendingMessage.append(" and time is ");
+		 sendingMessage.append("\" and time is ");
 		 sendingMessage.append(instant);
-		// jmsTemplate.convertAndSend(queue,sendingMessage.toString());		
+		 jmsTemplate.convertAndSend(queue,sendingMessage.toString());		
 		 logger.info("JMS Posting Message............... {} ",sendingMessage.toString());	
 	}
 	
