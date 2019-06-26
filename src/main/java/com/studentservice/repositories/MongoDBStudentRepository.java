@@ -96,7 +96,7 @@ public class MongoDBStudentRepository implements StudentRepository{
 	
 	private String setBuildInfo(){		
 		StringBuilder builder=new StringBuilder();
-		builder.append("Application Name :" + buildProperties.getName() +" - Version: " + buildProperties.getVersion());		
+		builder.append(buildProperties.getName() +" - Version: " + buildProperties.getVersion());		
 		return builder.toString();
 	}
 }
