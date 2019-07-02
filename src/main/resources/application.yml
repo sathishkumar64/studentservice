@@ -4,10 +4,11 @@ server:
 spring:
   application:
     name: studentservice  
- # data:
-    #mongodb:
-     # uri: mongodb://localhost:27017  
-     # database: studentservice 
+  data:
+    mongodb:  
+      # uri: mongodb+srv://admin:admin@cluster0-hsyh0.gcp.mongodb.net/?ssl=true&replicaSet=cluster0-hsyh0-0&authSource=admin
+       uri: mongodb://localhost:27017      
+       database: studentservice 
   #activemq:
    # broker-url: tcp://localhost:61616
    # user: admin
@@ -15,11 +16,10 @@ spring:
     
     
 logging:
-    level:
-      org.springframework.web: DEBUG
+    level:     
       com.studentservice: INFO
     pattern:
-      console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"    
-      file: "%d %-5level [%thread] %logger : %msg%n"
+     console: "%d{yyyy-MM-dd HH:mm:ss} %-5level  - %msg%n"
+     file:    "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"
     file: /logs/studentservice.log
   
