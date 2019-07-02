@@ -33,16 +33,11 @@ public class StudentServiceController {
 	public StudentAppData getStudents(@PathVariable String schoolname, @RequestHeader HttpHeaders headers)
 			throws Exception {
 		logger.info("Reading Header Info ::::::::: {}", headers);
-		StudentAppData appData = null;
-
-		if (headers.getFirst("end-user") == null || headers.getFirst("end-user").isEmpty()) {
-			throw new IllegalArgumentException("The 'end user' parameter must not be null or empty");
-		} else {
-			logger.info("Getting Student details for {} along with enduser ::::::::: {}", schoolname,
-					headers.getFirst("end-user"));
-		}
-
-		appData = mongoDBStudentRepository.findByschoolname(schoolname);
+		StudentAppData appData = null;		
+		logger.info("Reading Header Info ::::::::: {}",headers);		
+		String endUser=headers.getFirst("end-user") != null ? headers.getFirst("end-user") :"No End User";		
+		logger.info("Getting Student details for {} along with enduser ::::::::: {}",schoolname,endUser);				
+		appData=mongoDBStudentRepository.findByschoolname(schoolname);		
 		return appData;
 	}
 
