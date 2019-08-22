@@ -15,10 +15,6 @@ ENTRYPOINT ["java","-agentpath:/opt/cdbg/cdbg_java_agent.so==--logtostderr=1", "
 
 
 
-
-
-
-
 #ARG DEPENDENCY=target/dependency
 #COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
 #COPY ${DEPENDENCY}/META-INF /app/META-INF
