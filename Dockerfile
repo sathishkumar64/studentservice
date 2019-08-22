@@ -13,8 +13,6 @@ ENTRYPOINT ["java","-agentpath:/opt/cdbg/cdbg_java_agent.so==--logtostderr=1", "
 
 #ENTRYPOINT ["java","-jar","studentservice-0.0.2-SNAPSHOT.jar"]
 
-
-
 #ARG DEPENDENCY=target/dependency
 #COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
 #COPY ${DEPENDENCY}/META-INF /app/META-INF
