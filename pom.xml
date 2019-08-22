@@ -153,9 +153,15 @@
 				</executions>
 			</plugin>
 			
-			
-			
 			<plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <configuration>
+                    <dotGitDirectory>${project.basedir}/../.git</dotGitDirectory>
+                </configuration>
+            </plugin>
+			
+			<!-- <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <executions>
@@ -170,12 +176,12 @@
                             <commandlineArgs>
                                 uf ${project.build.directory}/${project.build.finalName}.jar
                                 -C ${project.build.directory}/classes source-context.json
-                               <!--  -C ${project.build.directory}/classes source-contexts.json -->
+                                -C ${project.build.directory}/classes source-contexts.json
                             </commandlineArgs>
                         </configuration>
                     </execution>                    
                 </executions>
-            </plugin>
+            </plugin> -->
 		</plugins>
 	</build>
 
