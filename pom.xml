@@ -170,7 +170,7 @@
                             <commandlineArgs>
                                 uf ${project.build.directory}/${project.build.finalName}.jar
                                 -C ${project.build.directory}/classes source-context.json
-                                -C ${project.build.directory}/classes source-contexts.json
+                               <!--  -C ${project.build.directory}/classes source-contexts.json -->
                             </commandlineArgs>
                         </configuration>
                     </execution>                    
