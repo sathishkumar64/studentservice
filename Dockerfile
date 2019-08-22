@@ -5,7 +5,7 @@ EXPOSE 8098 8099
 
 ADD ./target/studentservice-0.0.2-SNAPSHOT.jar studentservice-0.0.2-SNAPSHOT.jar
 
-RUN  mkdir /opt/cdbg && chmod 775 /opt/cdbg |\
+RUN  mkdir /opt/cdbg && \
      wget -qO- https://storage.googleapis.com/cloud-debugger/compute-java/debian-wheezy/cdbg_java_agent_gce.tar.gz | \
      tar xvz -C /opt/cdbg          
           
