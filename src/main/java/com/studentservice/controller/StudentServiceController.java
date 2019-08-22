@@ -40,8 +40,7 @@ public class StudentServiceController {
 	public StudentAppData getStudents(@PathVariable String schoolname, @RequestHeader HttpHeaders headers)
 			throws Exception {
 		logger.info("Reading Header Info ::::::::: {}", headers);
-		StudentAppData appData = null;		
-		logger.info("Reading Header Info ::::::::: {}",headers);		
+		StudentAppData appData = null;	
 		String endUser=headers.getFirst("end-user") != null ? headers.getFirst("end-user") :"No End User";		
 		logger.info("Getting Student details for {} along with enduser ::::::::: {}",schoolname,endUser);				
 		appData=mongoDBStudentRepository.findByschoolname(schoolname);		
