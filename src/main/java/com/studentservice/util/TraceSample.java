@@ -42,7 +42,7 @@ public class TraceSample {
 	// [END trace_setup_java_custom_span]
 
 	// [START trace_setup_java_full_sampling]
-	public void doWorkFullSampled() {
+	public static void doWorkFullSampled() {
 		try (Scope ss = tracer.spanBuilder("MyChildWorkSpan").setSampler(Samplers.alwaysSample()).startScopedSpan()) {
 			doInitialWork();
 			tracer.getCurrentSpan().addAnnotation("Finished initial work");
