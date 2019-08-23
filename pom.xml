@@ -90,7 +90,6 @@
 			<artifactId>spring-cloud-gcp-starter-trace</artifactId>
 		</dependency>
 
-		
 
 		<!-- Swagger -->
 		<dependency>
