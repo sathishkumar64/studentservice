@@ -42,7 +42,7 @@ public class TraceSample {
 	// [END trace_setup_java_custom_span]
 
 	// [START trace_setup_java_full_sampling]
-	public static void doWorkFullSampled() {
+	public void doWorkFullSampled() {
 		try (Scope ss = tracer.spanBuilder("MyChildWorkSpan").setSampler(Samplers.alwaysSample()).startScopedSpan()) {
 			doInitialWork();
 			tracer.getCurrentSpan().addAnnotation("Finished initial work");
@@ -57,22 +57,7 @@ public class TraceSample {
 	}
 	// [END trace_setup_java_create_and_register]
 
-	// [START trace_setup_java_create_and_register_with_token]
-	/*
-	 * public static void createAndRegisterWithToken(String accessToken) throws
-	 * IOException { Date expirationTime = DateTime.now().plusSeconds(60).toDate();
-	 * 
-	 * GoogleCredentials credentials = GoogleCredentials.create(new
-	 * AccessToken(accessToken, expirationTime)); GoogleCredential credential =
-	 * GoogleCredential.getApplicationDefault();
-	 * 
-	 * StackdriverTraceExporter.createAndRegister(StackdriverTraceConfiguration.
-	 * builder()
-	 * .setProjectId("MyStackdriverProjectId").setCredentials(credentials).build());
-	 * }
-	 */
-	// [END trace_setup_java_create_and_register_with_token]
-
+	
 	// [START trace_setup_java_register_exporter]
 	public static void createAndRegisterGoogleCloudPlatform(String projectId) throws IOException {
 		StackdriverTraceExporter

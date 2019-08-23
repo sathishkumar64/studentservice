@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.studentservice.domain.Student;
 import com.studentservice.domain.StudentAppData;
 import com.studentservice.repositories.MongoDBStudentRepository;
+import com.studentservice.util.TraceSample;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +31,9 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping(path = "/api")
 public class StudentServiceController {
 
+	
+	public TraceSample sample;
+	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
@@ -39,6 +43,10 @@ public class StudentServiceController {
 	@GetMapping(path = "/student/getStudentDetailsForSchool/{schoolname}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public StudentAppData getStudents(@PathVariable String schoolname, @RequestHeader HttpHeaders headers)
 			throws Exception {
+		
+		
+		sample.doWorkFullSampled();
+		
 		logger.info("Reading Header Info ::::::::: {}", headers);
 		StudentAppData appData = null;	
 		String endUser=headers.getFirst("end-user") != null ? headers.getFirst("end-user") :"No End User";		
