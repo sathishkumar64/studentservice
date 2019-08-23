@@ -1,15 +1,20 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:8
 MAINTAINER sathish vasu 
 VOLUME /tmp
 EXPOSE 8098 8099
 
-ADD ./target/studentservice-0.0.2-SNAPSHOT.jar studentservice-0.0.2-SNAPSHOT.jar
-
-RUN  mkdir /opt/cdbg && \
-     wget -qO- https://storage.googleapis.com/cloud-debugger/compute-java/debian-wheezy/cdbg_java_agent_gce.tar.gz | \
-     tar xvz -C /opt/cdbg          
+RUN mkdir -p /opt/cdbg
+RUN wget -qO- https://storage.googleapis.com/cloud-debugger/compute-java/debian-wheezy/cdbg_java_agent_gce.tar.gz | \
+    tar xvz -C /opt/cdbg         
+ 
+ADD ./target/studentservice-0.0.2-SNAPSHOT.jar studentservice-0.0.2-SNAPSHOT.jar 
+ 
           
 ENTRYPOINT ["java","-agentpath:/opt/cdbg/cdbg_java_agent.so==--logtostderr=1", "-Dcom.google.cdbg.module=studentservice","-Dcom.google.cdbg.version=0.0.2-SNAPSHOT","-jar","studentservice-0.0.2-SNAPSHOT.jar"]
+
+
+
+
 
 #ENTRYPOINT ["java","-jar","studentservice-0.0.2-SNAPSHOT.jar"]
 

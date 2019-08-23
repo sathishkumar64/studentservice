@@ -64,23 +64,30 @@
 			<artifactId>activemq-broker</artifactId>
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>io.opentracing.contrib</groupId>
-			<artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
-			<version>1.0.1</version>
-		</dependency>
+		<!-- <dependency> <groupId>io.opentracing.contrib</groupId> <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId> 
+			<version>1.0.1</version> </dependency> <dependency> <groupId>io.opentracing.contrib</groupId> 
+			<artifactId>opentracing-spring-jaeger-starter</artifactId> <version>0.2.0</version> 
+			</dependency> <dependency> <groupId>io.jaegertracing</groupId> <artifactId>jaeger-thrift</artifactId> 
+			<version>0.32.0</version> </dependency> -->
+		
+		<!-- Opencensus & StackDriver -->
 
 		<dependency>
-			<groupId>io.opentracing.contrib</groupId>
-			<artifactId>opentracing-spring-jaeger-starter</artifactId>
-			<version>0.2.0</version>
+			<groupId>io.opencensus</groupId>
+			<artifactId>opencensus-api</artifactId>
+			<version>0.12.2</version>
 		</dependency>
-
 		<dependency>
-			<groupId>io.jaegertracing</groupId>
-			<artifactId>jaeger-thrift</artifactId>
-			<version>0.32.0</version>
-		</dependency> -->
+			<groupId>io.opencensus</groupId>
+			<artifactId>opencensus-exporter-trace-stackdriver</artifactId>
+			<version>0.12.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.opencensus</groupId>
+			<artifactId>opencensus-impl</artifactId>
+			<version>0.12.2</version>
+			<scope>runtime</scope>
+		</dependency>
 		
 		<!-- Swagger -->
 		<dependency>
@@ -108,7 +115,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
@@ -152,36 +159,22 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
-                <configuration>
-                    <dotGitDirectory>${project.basedir}/../.git</dotGitDirectory>
-                </configuration>
-            </plugin>
-			
-			<!-- <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>add-source-context</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>jar</executable>
-                            <commandlineArgs>
-                                uf ${project.build.directory}/${project.build.finalName}.jar
-                                -C ${project.build.directory}/classes source-context.json
-                                -C ${project.build.directory}/classes source-contexts.json
-                            </commandlineArgs>
-                        </configuration>
-                    </execution>                    
-                </executions>
-            </plugin> -->
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<configuration>
+					<dotGitDirectory>${project.basedir}/../.git</dotGitDirectory>
+				</configuration>
+			</plugin>
+
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId> 
+				<executions> <execution> <id>add-source-context</id> <phase>package</phase> 
+				<goals> <goal>exec</goal> </goals> <configuration> <executable>jar</executable> 
+				<commandlineArgs> uf ${project.build.directory}/${project.build.finalName}.jar 
+				-C ${project.build.directory}/classes source-context.json -C ${project.build.directory}/classes 
+				source-contexts.json </commandlineArgs> </configuration> </execution> </executions> 
+				</plugin> -->
 		</plugins>
 	</build>
 
