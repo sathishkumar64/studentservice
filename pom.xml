@@ -90,6 +90,11 @@
 			<artifactId>spring-cloud-gcp-starter-trace</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>28.0-jre</version>
+		</dependency>
 
 		<!-- Swagger -->
 		<dependency>
@@ -102,6 +107,10 @@
 					<artifactId>tomcat-annotations-api</artifactId>
 					<groupId>org.apache.tomcat</groupId>
 				</exclusion>
+				<!-- <exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion> -->
 			</exclusions>
 		</dependency>
 
@@ -115,12 +124,16 @@
 					<artifactId>tomcat-annotations-api</artifactId>
 					<groupId>org.apache.tomcat</groupId>
 				</exclusion>
+				<!-- <exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion> -->
 			</exclusions>
 		</dependency>
 
 	</dependencies>
-	
-	
+
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
