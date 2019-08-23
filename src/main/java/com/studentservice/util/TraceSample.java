@@ -16,7 +16,7 @@ public class TraceSample {
 	
 	private static final Tracer tracer = Tracing.getTracer();
 	
-	private static final String PROJECT_ID = "sapient-si-dsst-184990";
+	
 
 
 	public static void doWork() {
@@ -61,6 +61,6 @@ public class TraceSample {
 	// [START trace_setup_java_register_exporter]
 	public static void createAndRegisterGoogleCloudPlatform(String projectId) throws IOException {
 		StackdriverTraceExporter
-				.createAndRegister(StackdriverTraceConfiguration.builder().setProjectId(PROJECT_ID).build());
+				.createAndRegister(StackdriverTraceConfiguration.builder().setProjectId(projectId).build());
 	}
 }
