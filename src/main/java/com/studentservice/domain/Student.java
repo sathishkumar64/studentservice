@@ -6,8 +6,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection = "student")
+@Getter @Setter @NoArgsConstructor
 public class Student implements Serializable{
 
 	/**
@@ -19,42 +24,6 @@ public class Student implements Serializable{
 	private String className;
 	private String schoolname;
 	
-	public String getClassName() {
-		return className;
-	}
-
-	public void setClassName(String className) {
-		this.className = className;
-	}
-
-	public String getSchoolname() {
-		return schoolname;
-	}
-
-	public void setSchoolname(String schoolname) {
-		this.schoolname = schoolname;
-	}
-
-	public Long getStudentId() {
-		return studentId;
-	}
-
-	public void setStudentId(Long studentId) {
-		this.studentId = studentId;
-	}
-
-	public String getStudentName() {
-		return studentName;
-	}
-
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
-	}
-
-	@Override
-	public String toString() {
-		return "Student [studentId=" + studentId + ", studentName=" + studentName + ", className=" + className
-				+ ", schoolname=" + schoolname + "]";
-	}
+	
 
 }

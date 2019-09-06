@@ -58,39 +58,36 @@ public class MongoDBStudentRepository implements StudentRepository{
 	@Override
 	public StudentAppData findByschoolname(String schoolName) {
 		List<Student> studentList=null;			
-		StudentAppData appData=new StudentAppData();			
-	//	sendJmsMessage(schoolName);		
+		StudentAppData appData=new StudentAppData();
 		Query query = query(where("schoolname").is(schoolName));		
 		studentList=operations.find(query, Student.class);
 		String buildInfo=setBuildInfo();		
 		appData.setStudentAppInfo(buildInfo);
 		if (studentList.isEmpty()) {				
 			appData.setMessage("Student List Not Found");	
-		}else{				 
+		}else{
 			appData.setListStudent(studentList);
-		}
+		}		
+		sendJmsMessage(schoolName,studentList.size());			
 		return appData;
 	}
-	
-	
-	
-	
-	
-	
-	
 
 	@Override
 	public List<Student> findAll() {	
-		return operations.findAll(Student.class);
+		List<Student> studentList=null;
+		studentList = operations.findAll(Student.class);
+		return studentList;
 	}
 
 	
-	private void sendJmsMessage(String schoolname){		
+	private void sendJmsMessage(String schoolname,int count){		
 		 Instant instant = Instant.now(); 		
 		 StringBuilder sendingMessage=new StringBuilder();
-		 sendingMessage.append("Posting JMS Student details for ");
+		 sendingMessage.append("Total Student count is ");
+		 sendingMessage.append(count);
+		 sendingMessage.append(" for requested school \"");
 		 sendingMessage.append(schoolname);
-		 sendingMessage.append(" and time is ");
+		 sendingMessage.append("\" and time is ");
 		 sendingMessage.append(instant);
 		 jmsTemplate.convertAndSend(queue,sendingMessage.toString());		
 		 logger.info("JMS Posting Message............... {} ",sendingMessage.toString());	
@@ -99,7 +96,7 @@ public class MongoDBStudentRepository implements StudentRepository{
 	
 	private String setBuildInfo(){		
 		StringBuilder builder=new StringBuilder();
-		builder.append("Application Name :" + buildProperties.getName() +" - Version: " + buildProperties.getVersion());		
+		builder.append(buildProperties.getName() +" - Version: " + buildProperties.getVersion());		
 		return builder.toString();
 	}
 }
