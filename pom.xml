@@ -5,11 +5,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.studentservice</groupId>
 	<artifactId>studentservice</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>studentservice</name>
 	<description>Demo project for Spring Boot</description>
-
-
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
