@@ -16,7 +16,7 @@ ADD ./target/studentservice-0.0.1-SNAPSHOT.jar studentservice-0.0.1-SNAPSHOT.jar
 
 
 
-ENTRYPOINT ["java","-jar","studentservice-0.0.2-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","studentservice-0.0.1-SNAPSHOT.jar"]
 
 #ARG DEPENDENCY=target/dependency
 #COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
