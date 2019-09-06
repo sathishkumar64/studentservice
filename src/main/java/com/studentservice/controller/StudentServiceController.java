@@ -36,17 +36,18 @@ public class StudentServiceController {
 
 	@Autowired
 	public MongoDBStudentRepository mongoDBStudentRepository;
-
+	
 	@ApiOperation(value = "Search a Student List with an School Name",response = String.class)
 	@GetMapping(path = "/student/getStudentDetailsForSchool/{schoolname}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public StudentAppData getStudents(@PathVariable String schoolname, @RequestHeader HttpHeaders headers)
-			throws Exception {
-		
+	public StudentAppData getStudents(@PathVariable String schoolname, @RequestHeader HttpHeaders headers) {
 		logger.info("Reading Header Info ::::::::: {}", headers);
 		StudentAppData appData = null;	
-		String endUser=headers.getFirst("end-user") != null ? headers.getFirst("end-user") :"No End User";		
-		logger.info("Getting Student details for {} along with enduser ::::::::: {}",schoolname,endUser);				
-		appData=mongoDBStudentRepository.findByschoolname(schoolname);		
+		if (headers.getFirst("end-user") == null || headers.getFirst("end-user").isEmpty()) {				
+			throw new IllegalArgumentException("The 'end user' parameter must not be null or empty");			
+		} else {				
+			logger.info("Getting Student details for {} along with enduser ::::::::: {}",schoolname,headers.getFirst("end-user"));				
+		}
+		appData = mongoDBStudentRepository.findByschoolname(schoolname);
 		return appData;
 	}
 
