@@ -68,7 +68,7 @@ public class MongoDBStudentRepository implements StudentRepository{
 		}else{
 			appData.setListStudent(studentList);
 		}		
-		sendJmsMessage(schoolName,studentList.size());			
+		//sendJmsMessage(schoolName,studentList.size());			
 		return appData;
 	}
 
